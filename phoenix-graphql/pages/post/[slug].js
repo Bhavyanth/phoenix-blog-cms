@@ -1,8 +1,14 @@
 import React from 'react'
-import { getCategories, getCategoryPost, getPostDetails, getPosts } from '../../services';
-import { PostDetail,PostCard, Categories, Loader, Author, CommentsForm, Comments, PostWidget } from '../../components';
+import { useRouter } from 'next/router';
+import { getPostDetails, getPosts } from '../../services';
+import { PostDetail, Categories, Loader, Author, CommentsForm, Comments, PostWidget } from '../../components';
 
 const PostDetails = ({ post }) => {
+  const router = useRouter();
+
+  if(router.isFallback){
+    <Loader />
+  }
     return (
         <>
         <div className="container mx-auto px-10 mb-8">
@@ -10,7 +16,7 @@ const PostDetails = ({ post }) => {
             <div className="col-span-1 lg:col-span-8">
               <PostDetail post={post} />
               <Author author={post.author} />
-              {/* <AdjacentPosts slug={post.slug} createdAt={post.createdAt} /> */}
+              <AdjacentPosts slug={post.slug} createdAt={post.createdAt} />
               <CommentsForm slug={post.slug} />
               <Comments slug={post.slug} />
             </div>
